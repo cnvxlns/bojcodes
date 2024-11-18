@@ -15,9 +15,7 @@ int dp(int n, int m){
     if(n > m){
         return 0;
     }
-    if(m == 1){
-        return 1;
-    }
+
     if(cache[n][m]){
         return cache[n][m];
     }
