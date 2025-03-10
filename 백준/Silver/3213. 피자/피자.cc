@@ -45,23 +45,24 @@ void Solve(){
         }
     }
     int ans = 0;
-    while(a[1] > 0 && a[3] > 0){
-        ans++;
-        a[1]--;
-        a[3]--;
-    }
-    while(a[1] > 0){
-        ans++;
-        a[1] -= 2;
-        a[2] --;
-    }
-    if(a[1] < 0){
+    ans += a[3];
+    if(a[1] >= a[3]){
+        a[1] -= a[3];
+    }else{
         a[1] = 0;
     }
-    while(a[2] > 1){
+    ans += a[2] / 2;
+    if(a[2] % 2 == 1){
         ans++;
-        a[2] -= 2;
+        a[1] -= 2;
+    }
+    if (a[1] > 0) {
+        ans += a[1] / 4;
+        if (a[1] % 4 > 0) {
+            ans++;
+        }
     }
 
-    cout << ans + a[1] + a[2] + a[3] << endl;
+
+    cout << ans << endl;
 }
