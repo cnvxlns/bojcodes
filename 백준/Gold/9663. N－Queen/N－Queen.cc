@@ -1,12 +1,11 @@
 #include<bits/stdc++.h>
 
+#define int long long
 #define Size 200032
-#define inf 0x3f3f3f3f
+#define inf (int)4e18
 #define endl "\n"
 #define sp " "
-#define int int64_t
-#define REP(i, n) for (int i = 0; i < (n); ++i)
-#define rep(i,a,b) for(int i=(int)(a);i<=(int)(b);i++)
+
 
 const int MOD = 1e9 + 7;
 
@@ -14,9 +13,8 @@ using namespace std;
 
 using vi = vector<int>;
 using vvi = vector<vi>;
+using vvc = vector<vector<char>>;
 using pii = pair<int, int>;
-using pqi = priority_queue<int>;
-using pqig = priority_queue<int, vi, greater<int>>;
 using tiii = tuple<int, int, int>;
 using pic = pair<int, char>;
 using pci = pair<char, int>;
@@ -35,39 +33,44 @@ pii operator-(const pii& a, const pii& b) {
 pii dxy[] = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} };
 
 int N;
+int ans;
 
-bool validity(vi& chk, int row, int col){
-    REP(i, col){
-        if(chk[i] == row || abs(chk[i] - row) == abs(i - col)){
+vi queens;
+
+bool validity(int idx, int y){
+    for(auto i = 1; i < idx; ++i){
+        if(queens[i] == y || abs(idx - i) == abs(queens[i] - y)){
             return false;
         }
     }
     return true;
 }
 
-void dfs(vi& chk, int col, int& ans){
-    if(col == N){
+void dfs(int idx){
+    if(idx == N + 1){
         ans++;
+        return ;
     }
-    REP(i, N){
-        if(validity(chk, i, col)){
-            chk[col] = i;
-            dfs(chk, col + 1, ans);
+    for(auto i = 1; i <= N; ++i){
+        if(validity(idx, i)){
+            queens[idx] = i;
+            dfs(idx + 1);
         }
     }
 }
 
-void Solve() {
+void Solve(){
     cin >> N;
-    int ans = 0;
-    vi chk(N, 0);
-    dfs(chk, 0, ans);
+    queens.resize(N + 1);
+    dfs(1);
     cout << ans << endl;
 }
 
 int32_t main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    Solve();
+    cin.tie(0)->sync_with_stdio(0);
+    int t = 1;
+    //cin >> t;
+    while(t--)
+        Solve();
     return 0;
 }
